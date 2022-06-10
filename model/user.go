@@ -2,7 +2,6 @@ package model
 
 import (
 	"fmt"
-	"time"
 )
 
 type User struct {
@@ -26,13 +25,4 @@ func QueryUserById(id int) (*User, error) {
 	}
 	return &user, nil
 
-}
-func Add() {
-	_, err := db.Exec("INSERT INTO user_reg (id,email,name,gender,pwd,create_ts,update_ts) VALUES ($1, $2, $3, $4, $5, $6, $7)", 2, "tianwei@mxplayer.in", "tianwei",
-		0, "123456", time.Now().Unix(), time.Now().Unix())
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println("insert success")
-	}
 }
