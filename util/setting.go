@@ -1,23 +1,18 @@
 package util
 
 import (
-	"log"
-
+	"awesomeProject/model"
+	"fmt"
 	"github.com/go-ini/ini"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
+	"log"
 )
 
-type Database struct {
-	Type     string
-	User     string
-	Password string
-	Host     string
-	Port     string
-	Name     string
-}
-
-var DatabaseSetting = &Database{}
+var DatabaseSetting = &model.Database{}
 
 var cfg *ini.File
+var db *sqlx.DB
 
 func init() {
 	var err error
@@ -27,6 +22,20 @@ func init() {
 	}
 
 	mapTo("database", DatabaseSetting)
+	db, err = sqlx.Connect(DatabaseSetting.Type, fmt.Sprintf(fmt.Sprintf("host=%s port=%s user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		DatabaseSetting.Host,
+		DatabaseSetting.Port,
+		DatabaseSetting.User,
+		DatabaseSetting.Password,
+		DatabaseSetting.Name)))
+	if err != nil {
+		panic(err)
+	}
+}
+
+func GetDB() *sqlx.DB {
+	return db
 }
 
 // mapTo map section

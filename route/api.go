@@ -18,7 +18,6 @@ func GetUser(c *gin.Context) {
 		return
 	}
 	user, err := service.QueryById(id)
-	//service.A()
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"error":   true,
