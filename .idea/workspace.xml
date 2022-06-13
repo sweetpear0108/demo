@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="668b7c7c-ef5a-4cf9-943b-89901dfbdec0" name="Changes" comment="Changes">
-      <change afterPath="$PROJECT_DIR$/model/mailbox.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c28f9e77-6052-469e-ac55-190a217c3c1d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c28f9e77-6052-469e-ac55-190a217c3c1d.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c28f9e77-6052-469e-ac55-190a217c3c1d/storage_v2/_src_/database/ltw.76MBAA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c28f9e77-6052-469e-ac55-190a217c3c1d/storage_v2/_src_/database/ltw.76MBAA/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/app.ini" beforeDir="false" afterPath="$PROJECT_DIR$/conf/app.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/route/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/route/api.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/route/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/route/router.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/service.go" afterDir="false" />

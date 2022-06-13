@@ -3,6 +3,7 @@ package route
 import (
 	"awesomeProject/model"
 	"awesomeProject/service"
+	"awesomeProject/util"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/gomail.v2"
@@ -14,7 +15,8 @@ import (
 	"time"
 )
 
-var vcode string
+//var vcode string
+var vcode = "111111"
 
 func Verify(c *gin.Context) {
 	email := c.PostForm("email")
@@ -64,22 +66,80 @@ func RegisterRequest(c *gin.Context) {
 	email := c.PostForm("email")
 	code := c.PostForm("code")
 	pwd := c.PostForm("pwd")
+	EncodePwd := util.EncodeMD5(pwd)
 	if strings.Compare(code, vcode) != 0 {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"message": "Verification code wrong",
 		})
 		return
 	}
-	name, id, err := service.Reg(email, pwd)
-	if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{
-			"message": "Server is busy",
+	if service.ExistCheck(email) {
+		c.IndentedJSON(http.StatusConflict, gin.H{
+			"message": "Account Existed",
+		})
+		return
+	}
+	name, id := service.Reg(email, EncodePwd)
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"id":   id,
+		"name": name,
+	})
+}
+
+func SignIn(c *gin.Context) {
+	email := c.PostForm("email")
+	pwd := c.PostForm("pwd")
+	boolean, id, name := service.Sign(email, util.EncodeMD5(pwd))
+	if boolean == false {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"message": "Login failed",
 		})
 		return
 	}
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"id":   id,
-		"name": name,
+		"message": "Login succeed",
+		"id":      id,
+		"name":    name,
+	})
+}
+
+func UpdatePwd(c *gin.Context) {
+	email := c.PostForm("email")
+	oldpwd := c.PostForm("oldpwd")
+	newpwd := c.PostForm("newpwd")
+	boolean, _, _ := service.Sign(email, util.EncodeMD5(oldpwd))
+	if boolean == false {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"message": "Wrong email or password",
+		})
+		return
+	}
+	service.UpdatePWD(email, util.EncodeMD5(newpwd))
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"message": "Update succeed",
+	})
+}
+
+func UpdateInfo(c *gin.Context) {
+	id := c.PostForm("id")
+	name := c.PostForm("name")
+	gender := c.PostForm("gender")
+	atoi_id, err := strconv.Atoi(id)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"message": "id must be integer",
+		})
+		return
+	}
+	var g int
+	if gender == "male" {
+		g = 1
+	} else {
+		g = 0
+	}
+	service.UpdateINFO(atoi_id, name, g)
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"message": "update succeed",
 	})
 }
 
